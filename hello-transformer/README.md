@@ -7,6 +7,11 @@ Deploy the EJB JAR
 * Start Wildfly 8.1.0.Final (or newer)
 * mvn clean install wildfly:deploy
 
+Run the EJB client 
+========================
+It is really just a SOAP based client. Run it like this:
+* mvn compile exec:java
+
 Inspect the server log  
 ========================
 Notice that a single EJB was installed: HelloBean.
@@ -20,9 +25,3 @@ TIP: If you really want to manipulate the bytecode, I urge you to take a look at
 They will help you do something on a higher level than 'bytes' (which you have access to within the transformer).
 
 /Enjoy what is otherwise normally only performed by advanced Java Agents.  
-
-About the EJB client  
-========================
-Still needs some work in order to work properly. 
-You can use soapUI meanwhile to access the EJB (it exposes a SOAP endpoint).
-I do :-) 
