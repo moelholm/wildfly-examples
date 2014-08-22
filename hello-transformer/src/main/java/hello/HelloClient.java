@@ -23,11 +23,11 @@ public class HelloClient {
 
     }
 
-    private static <T> T createClient(String wsdlUrl, Class<T> intf) throws MalformedURLException {
-        URL url = new URL(wsdlUrl);
-        QName service = new QName(String.format("http://%s/", intf.getPackage().getName()), String.format("%sBeanService",
-                intf.getSimpleName()));
-        return (T) new Service(url, service) {
-        }.getPort(new QName("http://hello/", "HelloBeanPort"), intf);
+    private static <T> T createClient(String wsdl, Class<T> intf) throws MalformedURLException {
+        URL wsdlUrl = new URL(wsdl);
+        String namespace = String.format("http://%s/", intf.getPackage().getName());
+        QName service = new QName(namespace, String.format("%sBeanService", intf.getSimpleName()));
+        return (T) new Service(wsdlUrl, service) {
+        }.getPort(new QName(namespace, String.format("%sBeanPort", intf.getSimpleName())), intf);
     }
 }
