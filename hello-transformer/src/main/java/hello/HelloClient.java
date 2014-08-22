@@ -15,8 +15,8 @@ public class HelloClient {
         String ejbJndiName = "ejb:/hello-transformer-1.0.0-SNAPSHOT/HelloBean!hello.Hello";
         String host = "localhost";
         String port = "8080";
-        String usr = "apc";
-        String pwd = "apc";
+        String usr = "duke";
+        String pwd = "duke";
 
         Properties env = new Properties();
         env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
