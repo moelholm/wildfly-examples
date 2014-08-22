@@ -1,39 +1,33 @@
 package hello;
 
-import java.util.Properties;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 
 import org.apache.log4j.Logger;
 
 public class HelloClient {
 
-    public static void main(String[] args) throws NamingException {
+    public static void main(String[] args) throws NamingException, MalformedURLException {
 
-        String ejbJndiName = "ejb:/hello-transformer-1.0.0-SNAPSHOT/HelloBean!hello.Hello";
-        String host = "localhost";
-        String port = "8080";
-        String usr = "duke";
-        String pwd = "duke";
+        String wsdlUrl = "http://localhost:8080/hello-transformer-1.0.0-SNAPSHOT/HelloBean?wsdl";
 
-        Properties env = new Properties();
-        env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-        env.put("org.jboss.ejb.client.scoped.context", "true");
-        env.put("remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED", "false");
-        env.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOPLAINTEXT", "false");
-        env.put("remote.connections", "default");
-        env.put("remote.connection.default.host", host);
-        env.put("remote.connection.default.port", port);
-        env.put("remote.connection.default.username", usr);
-        env.put("remote.connection.default.password", pwd);
+        Hello webServiceClient = createClient(wsdlUrl, Hello.class);
 
-        Hello hello = (Hello) new InitialContext(env).lookup(ejbJndiName);
-
-        String result = hello.sayHello("Client application");
+        String result = webServiceClient.sayHello("client");
 
         Logger.getLogger(HelloClient.class).info(String.format("Result from server: %s", result));
 
+    }
+
+    private static <T> T createClient(String wsdlUrl, Class<T> intf) throws MalformedURLException {
+        URL url = new URL(wsdlUrl);
+        QName service = new QName(String.format("http://%s/", intf.getPackage().getName()), String.format("%sBeanService",
+                intf.getSimpleName()));
+        return (T) new Service(url, service) {
+        }.getPort(new QName("http://hello/", "HelloBeanPort"), intf);
     }
 }
