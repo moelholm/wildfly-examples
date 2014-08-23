@@ -7,8 +7,12 @@ import javax.naming.NamingException;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import org.apache.log4j.Logger;
-
+/**
+ * A SOAP based client to the HelloBean EJB.<br>
+ * <br>
+ *
+ * @author nickymolholm
+ */
 public class HelloClient {
 
     public static void main(String[] args) throws NamingException, MalformedURLException {
@@ -19,10 +23,16 @@ public class HelloClient {
 
         String result = webServiceClient.sayHello("client");
 
-        Logger.getLogger(HelloClient.class).info(String.format("Result from server: %s", result));
+        System.out.printf("Result from server: %s%n", result);
 
     }
 
+    /**
+     * A handly horribly looking utility method that generates a dynamic proxy that can talk SOAP with wildfly.<br>
+     * <br>
+     * ( I don't know if it counts...but it's kind of cool that we can omit the JAX-WS generated code that would otherwise be
+     * necessary, don't you think? :) )
+     */
     private static <T> T createClient(String wsdl, Class<T> intf) throws MalformedURLException {
         URL wsdlUrl = new URL(wsdl);
         String namespace = String.format("http://%s/", intf.getPackage().getName());

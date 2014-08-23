@@ -1,20 +1,24 @@
 package hello;
 
 import javax.annotation.security.PermitAll;
-import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
+/**
+ * A super simple EJB that exposes a web service <code>view</code> (SOAP/WSDL).<br>
+ * <br>
+ *
+ * @author nickymolholm
+ */
 @Stateless
-@Remote(Hello.class)
-@PermitAll
 @WebService
+@PermitAll
 public class HelloBean implements Hello {
 
-    private static final MyLogger logger = new MyLogger();
-
     public String sayHello(String caller) {
-        logger.info(String.format("Received invocation from %s", caller));
+
+        System.out.println("HelloBean.sayHello()");
+
         return String.format("Hello %s", caller);
     }
 }
