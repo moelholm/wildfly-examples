@@ -15,12 +15,14 @@ Inspect the server log
 ========================
 Notice that a single EJB was installed: HelloBean. It exposes a SOAP based interface, which is used by the client application.
 
-Notice the lines just before the JNDI information: They all start with MyClassTransformer.transform(). 
-These lines shows the classes as they are about to be loaded into the JVM classloader for your module.
-You may be a bit disappointed now, because we haven't really transformed the classes - sorry!
-That is an exercise for the brilliant reader :).
+Upon deployment you should see something like: "Instrumenting hello.HelloBean" and "Successfully instrumented hello.HelloBean".
+That is the example class transformer that tells you it has instrumented the HelloBean EJB.
+Upon calling the EJB's web service endpoint you should see something like: "INTERCEPTED MethodInvocation".
+One line before the method invocation. And one line after the method invocation. 
+Do make sure to verify that these lines hasn't just been printed by the EJB's sayHello() method.
+And the check out the class "HelloByteCodeManipulator" which do the manipulation on behalf of the class transformer.
 
-TIP: If you really want to manipulate the bytecode, I urge you to take a look at byteman, cglib, javassist or the like. 
-They will help you do something on a higher level than 'bytes' (which you have access to within the transformer).
+Finally: note that the transformer is registered in the WAR' archives META-INF/jboss-deployment-structure.xml file.
+This is the handy hook provided to us by the Wildfly.
 
 /Enjoy what is otherwise normally only performed by advanced Java Agents.  
