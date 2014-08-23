@@ -28,7 +28,7 @@ public class HelloClient {
     }
 
     /**
-     * A handly horribly looking utility method that generates a dynamic proxy that can talk SOAP with wildfly.<br>
+     * A handy horribly looking utility method that generates a dynamic proxy that can talk SOAP with wildfly.<br>
      * <br>
      * ( I don't know if it counts...but it's kind of cool that we can omit the JAX-WS generated code that would otherwise be
      * necessary, don't you think? :) )
