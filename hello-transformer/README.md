@@ -17,10 +17,13 @@ Notice that a single EJB was installed: HelloBean. It exposes a SOAP based inter
 
 Upon deployment you should see something like: "Instrumenting hello.HelloBean" and "Successfully instrumented hello.HelloBean".
 That is the example class transformer that tells you it has instrumented the HelloBean EJB.
+
 Upon calling the EJB's web service endpoint you should see something like: "INTERCEPTED MethodInvocation".
 One line before the method invocation. And one line after the method invocation. 
+
 Do make sure to verify that these lines hasn't just been printed by the EJB's sayHello() method.
-And the check out the class "HelloByteCodeManipulator" which do the manipulation on behalf of the class transformer.
+
+And then check out the class "HelloByteCodeManipulator" which do the manipulation on behalf of the class transformer.
 
 Finally: note that the transformer is registered in the WAR' archives META-INF/jboss-deployment-structure.xml file.
 This is the handy hook provided to us by the Wildfly.
