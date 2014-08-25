@@ -1,14 +1,14 @@
-package hello;
+package hello.server.ejb;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
 /**
- * A super simple EJB that exposes a web service <code>view</code> (SOAP/WSDL).<br>
+ * A simple EJB that exposes a web service <code>view</code> (SOAP/WSDL).<br>
  * <br>
  *
- * @author nickymolholm
+ * @author <a href="mailto:moelholm@gmail.com">Nicky Moelholm</a>
  */
 @Stateless
 @WebService

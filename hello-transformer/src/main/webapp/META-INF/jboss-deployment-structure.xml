@@ -2,7 +2,7 @@
 <jboss-deployment-structure>
 	<deployment>
 		<transformers>
-			<transformer class="hello.MyClassTransformer" />
+			<transformer class="hello.server.transformation.HelloBeanClassFileTransformer" />
 		</transformers>
 	</deployment>
 </jboss-deployment-structure>

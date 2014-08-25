@@ -1,4 +1,4 @@
-package hello;
+package hello.server.transformation;
 
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -11,7 +11,7 @@ import javassist.NotFoundException;
  * This class is hardly useful in real projects (because it is rather limited in what it is able to do right now). But you can
  * use it as inspiration for your own wonderful bytecode adventures.
  *
- * @author nickymolholm
+ * @author <a href="mailto:moelholm@gmail.com">Nicky Moelholm</a>
  */
 public class HelloByteCodeManipulator {
 
@@ -95,7 +95,7 @@ public class HelloByteCodeManipulator {
 
     private ClassPool createClassPool(ClassLoader loader) {
         try {
-            DeadLockFreeClassPool pool = new DeadLockFreeClassPool();
+            HelloClassPool pool = new HelloClassPool();
             pool.addClassLoaderClassPath(loader);
             pool.addClassLoaderClassPath(Thread.currentThread().getContextClassLoader());
             return pool;

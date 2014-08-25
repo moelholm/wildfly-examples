@@ -1,4 +1,6 @@
-package hello;
+package hello.client;
+
+import hello.server.ejb.Hello;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,7 +13,7 @@ import javax.xml.ws.Service;
  * A SOAP based client to the HelloBean EJB.<br>
  * <br>
  *
- * @author nickymolholm
+ * @author <a href="mailto:moelholm@gmail.com">Nicky Moelholm</a>
  */
 public class HelloClient {
 
@@ -28,16 +30,30 @@ public class HelloClient {
     }
 
     /**
-     * A handy horribly looking utility method that generates a dynamic proxy that can talk SOAP with wildfly.<br>
-     * <br>
-     * ( I don't know if it counts...but it's kind of cool that we can omit the JAX-WS generated code that would otherwise be
-     * necessary, don't you think? :) )
+     * Generates a dynamic proxy that can talk SOAP with wildfly's JAX-WS stack.
      */
     private static <T> T createClient(String wsdl, Class<T> intf) throws MalformedURLException {
         URL wsdlUrl = new URL(wsdl);
-        String namespace = String.format("http://%s/", intf.getPackage().getName());
+
+        String namespace = inferXmlNamespace(intf);
+
         QName service = new QName(namespace, String.format("%sBeanService", intf.getSimpleName()));
+
         return (T) new Service(wsdlUrl, service) {
         }.getPort(new QName(namespace, String.format("%sBeanPort", intf.getSimpleName())), intf);
+    }
+
+    private static String inferXmlNamespace(Class<?> intf) {
+        StringBuilder result = new StringBuilder("http://");
+
+        String[] packages = intf.getPackage().getName().split("\\.");
+        for (int i = packages.length - 1; i >= 0; i--) {
+            result.append(packages[i]);
+            if (i != 0) {
+                result.append(".");
+            }
+        }
+        result.append("/");
+        return result.toString();
     }
 }
